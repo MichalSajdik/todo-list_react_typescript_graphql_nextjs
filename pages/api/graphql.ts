@@ -17,40 +17,78 @@ const typeDefs = gql`
   }
 `;
 
-let todos = [{id: "1", text: 'Default Todo', timestamp: "0"}];
-
-let id = 1;
+let fs = require('fs');
 
 const resolvers = {
   Query: {
-    todos: () => todos,
+    todos: () => {
+      let todos = [];
+      try {
+        let rawdata = fs.readFileSync('data.json');
+        todos = JSON.parse(rawdata);
+      } catch (err) {
+      }
+
+      return todos
+    },
   },
   Mutation: {
     createTodo: (parent: any, args: any) => {
-      id++;
-      let idString = id.toString()
+      let id = "0";
+      let todos = [];
+      try {
+        let rawdata = fs.readFileSync('data.json');
+        todos = JSON.parse(rawdata);
+        id = todos[todos.length - 1].id;
+      } catch (err) {
+      }
+      let idString = (parseInt(id) + 1).toString()
       todos.push({
         id: idString,
         text: args.text,
         timestamp: Date.now().toString()
       });
+
+      fs.writeFileSync("data.json", JSON.stringify(todos));
+      console.log(todos);
       return idString;
     },
     updateTodo: (parent: any, args: any) => {
+      let todos = [];
+      try {
+        let rawdata = fs.readFileSync('data.json');
+        todos = JSON.parse(rawdata);
+      } catch (err) {
+      }
+
+      let tmpTodoText = "Not found";
       for (let i in todos) {
         if (todos[i].id === args.id) {
           todos[i].text = args.text;
           todos[i].timestamp = Date.now().toString();
-          return todos[i].text;
+          tmpTodoText = todos[i].text;
         }
       }
+
+      fs.writeFileSync("data.json", JSON.stringify(todos));
+      return tmpTodoText;
+
     },
     deleteTodo: (parent: any, args: any) => {
+      let todos = [];
+      try {
+        let rawdata = fs.readFileSync('data.json');
+        todos = JSON.parse(rawdata);
+      } catch (err) {
+      }
+
       for (let i in todos) {
         if (todos[i].id === args.id) {
           todos.splice(parseInt(i), 1);
         }
       }
+
+      fs.writeFileSync("data.json", JSON.stringify(todos));
       return args.id;
     }
   }
