@@ -1,5 +1,7 @@
 # TODO list
 
+![image](https://user-images.githubusercontent.com/30591067/134822293-daafa4f5-1c97-4e4b-b936-7b40ce939d54.png)
+
 - implement a simple **TODO list web application**
 - application should be implemented in **Typescript** (**Node.js** on backend and **React** on frontend)
 
