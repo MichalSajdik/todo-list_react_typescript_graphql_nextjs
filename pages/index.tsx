@@ -108,17 +108,19 @@ const TodoItem = (props: any) => {
       <TextField id="outlined-basic" variant="outlined" style={{width: "200px", display: "inline-block"}}
                  value={new Date(parseInt(todo.timestamp)).toLocaleString()} disabled={true}/>
       {isDisabled && (
-        <IconButton aria-label="edit" style={{display: "inline-block", height: "56px", width:"56px"}}
+        <IconButton aria-label="edit" style={{display: "inline-block", height: "56px", width: "56px"}}
                     onClick={() => setIsDisabled(false)}>
           <ModeEditIcon/>
         </IconButton>
       )}
       {!isDisabled && (
-        <IconButton aria-label="save" style={{display: "inline-block", height: "56px", width:"56px"}} onClick={updateTodoEvent}>
+        <IconButton aria-label="save" style={{display: "inline-block", height: "56px", width: "56px"}}
+                    onClick={updateTodoEvent}>
           <SaveIcon/>
         </IconButton>
       )}
-      <IconButton aria-label="delete" style={{display: "inline-block", height: "56px", width:"56px"}} onClick={deleteTodoEvent}>
+      <IconButton aria-label="delete" style={{display: "inline-block", height: "56px", width: "56px"}}
+                  onClick={deleteTodoEvent}>
         <DeleteIcon/>
       </IconButton>
     </MaxSizeDiv>
